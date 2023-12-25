@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="your name here">
+
+    <title>Remaining time of the year</title>
+
+    <style>
+        body {
+            background-image: url('https://www.hdwallpapers.in/download/landscape_and_trees_covered_with_snow_during_winter_sunset_hd_nature-HD.jpg'); /* Replace with the actual path to your image */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #ffffff;
+            margin: 0;
+        }
+
+        h1, p {
+            color: #ffffff;
+            text-align: center;
+            margin: 0;
+            font-size: 50px;
+        }
+
+        h2 {
+            font-size: 60px;
+            text-align: center;
+        }
+
+        #year-header {
+            font-size: 80px;
+            font-weight: 500;
+            padding-top: 20px;
+        }
+
+        #remaining-time {
+            font-size: 70px;
+            padding-top: 50px;
+            font-weight: bold;
+        }
+
+        #percentage-remaining-display {
+            padding-top: 40px;
+        }
+
+        #filler {
+            padding-top: 30px;
+        }
+
+        #current-time {
+            font-size: 30px;
+            font-weight: bold;
+            position: absolute;
+            bottom: 20px;
+            text-align: center;
+            width: 98%;
+        }
+
+        #timezone {
+            display: inline-block;
+            margin-left: 5px;
+            font-size: 30px;
+            position: absolute;
+            bottom: 10px;
+            text-align: center;
+            width: 98%;
+        }
+
+    </style>
+</head>
+<body>
+    <h1 id="year-header"></h1>
+
+    <p id="current-time"></p>
+    <p id="timezone"></p>
+    <p id="remaining-time"><span id="remaining-units"></span></p>
+    <h2>entfernt</h2>
+
+    <p id="percentage-passed-display">
+        <span id="percentage-passed" style="font-size: 1em; font-weight: 500;"></span><br>
+        <span id="percentage-passed-accurate" style="font-size: 0.6em; font-weight: 500;"></span>
+    </p>
+
+    <p id="percentage-remaining-display">
+        <span id="percentage-remaining" style="font-size: 1em; font-weight: 500;"></span><br>
+        <span id="percentage-remaining-accurate" style="font-size: 0.6em; font-weight: 500;"></span>
+    </p>
+
+    <p id="filler">—————————————————————————————————————</p>
+
+    <script>
+        function isLeapYear(year) {
+            return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+        }
+
+        function updateTimes() {
+            var now = new Date();
+
+            // getting and displaying current time and timezone
+            
+            var timezoneOffsetMinutes = now.getTimezoneOffset();
+            var timezoneOffsetHours = Math.abs(Math.floor(timezoneOffsetMinutes / 60));
+            var timezoneOffsetSign = timezoneOffsetMinutes < 0 ? '+' : '-';
+
+            // calculating remaining time of the year
+
+            var endOfYear = new Date(now.getFullYear() + 1, 0, isLeapYear(now.getFullYear() + 1) ? 1 : 0);
+            var remainingTime = endOfYear - now;
+
+            var remainingMonths = Math.floor(remainingTime / (30 * 24 * 60 * 60 * 1000));
+            var remainingDays = Math.floor((remainingTime % (30 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
+            var remainingHours = Math.floor((remainingTime % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+            var remainingMinutes = Math.floor((remainingTime % (60 * 60 * 1000)) / (60 * 1000));
+            var remainingSeconds = Math.floor((remainingTime % (60 * 1000)) / 1000) + 1;
+
+            // concatenating 'remaining' units into a single string
+
+            var remainingUnitsString =
+                remainingMonths + ' Monate ' +
+                remainingDays + ' Tage ' +
+                remainingHours + ' Stunden ' +
+                remainingMinutes + ' Minuten ' +
+                remainingSeconds + ' Sekunden';
+
+            // updating UI with remaining time
+
+            document.getElementById('year-header').innerHTML = (now.getFullYear() + 1).toString() + ' ist';
+
+            document.getElementById('remaining-units').innerHTML = remainingUnitsString;
+
+            document.getElementById('current-time').innerHTML = 'Dein Datum und deine Uhrzeit: ' + now.toLocaleString() + ' (GMT' + timezoneOffsetSign + timezoneOffsetHours + ')';
+
+            var currentDayInYear = Math.ceil((now - new Date(now.getFullYear(), 0, 1)) / (1000 * 60 * 60 * 24));
+            var isLeap = isLeapYear(now.getFullYear());
+
+            var percentageDays = isLeap ? (currentDayInYear - 1) / (isLeap ? 366 : 365) : (currentDayInYear - 1) / 365;
+            var percentageHours = isLeap ? now.getHours() / 24 / (isLeap ? 366 : 365) : now.getHours() / 24 / 365;
+            var percentageMinutes = isLeap ? now.getMinutes() / 60 / 24 / (isLeap ? 366 : 365) : now.getMinutes() / 60 / 24 / 365;
+            var percentageSeconds = isLeap ? now.getSeconds() / 60 / 60 / 24 / (isLeap ? 366 : 365) : now.getSeconds() / 60 / 60 / 24 / 365;
+
+            var percentageYear = 100 * (percentageDays + percentageHours + percentageMinutes + percentageSeconds);
+
+            var percentageYearRemaining = 100 - percentageYear
+
+            document.getElementById('percentage-passed').innerHTML = 'Somit sind ~' + percentageYear.toFixed(3) + '% des Jahres vergangen';
+            document.getElementById('percentage-passed-accurate').innerHTML = 'Oder genauer, ~' + percentageYear.toFixed(8) + '%';
+
+            document.getElementById('percentage-remaining').innerHTML = 'Somit verbleiben ~' + percentageYearRemaining.toFixed(3) + '% des Jahres';
+            document.getElementById('percentage-remaining-accurate').innerHTML = 'Oder genauer, ~' + percentageYearRemaining.toFixed(8) + '% des Jahres';
+        }
+
+        // update once initially and then every second
+
+        updateTimes();
+        setInterval(updateTimes, 100);
+
+    </script>
+</body>
+</html>
