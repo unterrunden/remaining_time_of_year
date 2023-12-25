@@ -42,18 +42,23 @@
             font-weight: bold;
         }
 
-        #percentage-remaining-display {
+        #percentage-passed-display {
             padding-top: 40px;
         }
 
-        #filler {
+        #percentage-remaining-display {
             padding-top: 30px;
+        }
+
+        #filler {
+            padding-bottom: 0px;
         }
 
         #current-time {
             font-size: 30px;
             font-weight: bold;
             bottom: 20px;
+            padding-bottom: 30px;
             text-align: center;
         }
 
@@ -72,10 +77,11 @@
 <body>
     <h1 id="year-header"></h1>
 
-    <p id="current-time"></p>
     <p id="timezone"></p>
     <p id="remaining-time"><span id="remaining-units"></span></p>
     <h2>entfernt</h2>
+
+    <p id="current-time"></p>
 
     <p id="percentage-passed-display">
         <span id="percentage-passed" style="font-size: 1em; font-weight: 500;"></span><br>
