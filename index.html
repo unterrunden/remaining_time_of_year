@@ -116,12 +116,14 @@
 
         function toggleColor() {
             const currentColor = getComputedStyle(body).color;
-            const isWhite = currentColor === 'rgb(255, 255, 255)' || currentColor === '#fff';
+            const isWhite = currentColor === 'rgb(255, 255, 255)' || currentColor === '#ffffff';
+	    const isBlack = currentColor === 'rgb(0, 0, 0)' || currentColor === '#000000'
 
             // toggle between white and black for each element
     
 	    elementsToToggle.forEach(element => {
                 element.style.color = isWhite ? 'black' : 'white';
+		element.style.color = isBlack ? 'white' : 'black';
             });
         }
 
