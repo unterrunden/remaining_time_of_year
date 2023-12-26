@@ -68,9 +68,18 @@
             width: 98%;
         }
 
+        button {
+            font-size: 16px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
     </style>
 </head>
 <body>
+    <button id="colorToggleButton">Toggle Color</button>
+	
     <h1 id="year-header"></h1>
 
     <p id="timezone"></p>
@@ -90,6 +99,19 @@
     </p>
 
     <script>
+
+        const button = document.getElementById('colorToggleButton');
+
+        button.addEventListener('click', toggleColor);
+
+        function toggleColor() {
+            const currentColor = getComputedStyle(button).color;
+            const isBlack = currentColor === 'rgb(0, 0, 0)' || currentColor === '#000' || currentColor.toLowerCase() === 'black';
+      
+			button.style.color = isBlack ? 'white' : 'black';
+        }
+
+		
         function isLeapYear(year) {
             return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
         }
