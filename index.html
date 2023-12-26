@@ -28,21 +28,21 @@
         h2 {
             font-size: 60px;
             text-align: center;
-	        color: #ffffff;
+	    color: #ffffff;
         }
 
         #year-header {
             font-size: 80px;
             font-weight: 500;
             padding-top: 20px;
-			color: #ffffff;
+	    color: #ffffff;
         }
 
         #remaining-time {
             font-size: 70px;
             padding-top: 50px;
             font-weight: bold;
-	        color: #ffffff;
+	    color: #ffffff;
         }
 
         #percentage-passed-display {
@@ -80,7 +80,7 @@
             padding: 10px 20px;
             cursor: pointer;
             transition: color 0.3s ease;
-			color: #808080;
+	    color: #808080;
         }
         
     </style>
@@ -108,17 +108,21 @@
 
     <script>
 
-	const button = document.getElementById('colorToggleButton');
+        const button = document.getElementById('colorToggleButton');
         const body = document.body;
+        const elementsToToggle = document.querySelectorAll('#year-header, #remaining-time, #percentage-passed, #percentage-passed-accurate, #percentage-remaining, #percentage-remaining-accurate, #current-time, #timezone');
 
         button.addEventListener('click', toggleColor);
 
         function toggleColor() {
-            const currentColor = getComputedStyle(body).backgroundColor;
+            const currentColor = getComputedStyle(body).color;
             const isWhite = currentColor === 'rgb(255, 255, 255)' || currentColor === '#fff';
 
-	    body.style.backgroundColor = isWhite ? 'black' : 'white';
-            body.style.color = isWhite ? 'white' : 'black';
+            // toggle between white and black for each element
+    
+	    elementsToToggle.forEach(element => {
+                element.style.color = isWhite ? 'black' : 'white';
+            });
         }
 
 		
