@@ -152,8 +152,8 @@
             var remainingMinutes = Math.floor((remainingTime % (60 * 60 * 1000)) / (60 * 1000));
             var remainingSeconds = Math.floor((remainingTime % (60 * 1000)) / 1000) + 1;
 
-            // dynamic updating the units if their value is 1 (i.e. 1 minute instead of 1 minutes)
-
+	    // dynamic updating the units if their value is 1 (i.e. 1 minute instead of 1 minutes)
+            
 	    var monthsString = remainingMonths === 1 ? ' Monat ' : ' Monate ';
             var daysString = remainingDays === 1 ? ' Tag ' : ' Tage ';
             var hoursString = remainingHours === 1 ? ' Stunde ' : ' Stunden ';
@@ -162,12 +162,13 @@
 
             // concatenating 'remaining' units into a single string
 
-            var remainingUnitsString =
-                remainingMonths + ' Monate ' +
-                remainingDays + ' Tage ' +
-                remainingHours + ' Stunden ' +
-                remainingMinutes + ' Minuten ' +
-                remainingSeconds + ' Sekunden';
+	    var remainingUnitsString =
+                (remainingMonths === 1 ? remainingMonths + monthsString : '') +
+                (remainingDays === 1 ? remainingDays + daysString : '') +
+                (remainingHours === 1 ? remainingHours + hoursString : '') +
+                (remainingMinutes === 1 ? remainingMinutes + minutesString : '') +
+                (remainingSeconds === 1 ? remainingSeconds + secondsString : '');
+
 
             // updating UI with remaining time
 
