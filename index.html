@@ -23,28 +23,28 @@
             text-align: center;
             margin: 0;
             font-size: 50px;
-	    font-weight: 1000;
+            font-weight: 1000;
         }
 
         h2 {
             font-size: 60px;
-	    font-weight: 500;
+            font-weight: 500;
             text-align: center;
-	    color: #ffffff;
+            color: #ffffff;
         }
 
         #year-header {
             font-size: 80px;
             font-weight: 800;
             padding-top: 20px;
-	    color: #ffffff;
+            color: #ffffff;
         }
 
         #remaining-time {
             font-size: 70px;
             padding-top: 35px;
             font-weight: 900;
-	    color: #ffffff;
+            color: #ffffff;
         }
 
         #percentage-passed-display {
@@ -76,14 +76,13 @@
             width: 98%;
             color: #ffffff;
         }
-        
     </style>
 </head>
 <body>
     <h1 id="year-header"></h1>
 
     <p id="timezone"></p>
-    <p id="remaining-time"><span id="remaining-units"></span></p>
+    <p id="remaining-time"></p> <!-- Updated element for countdown -->
     <h2>entfernt</h2>
 
     <p id="current-time">
@@ -91,7 +90,6 @@
         <strong id="bold-date-time"></strong>
         (GMT<span id="timezone"></span>)
     </p>
-
 
     <p id="percentage-passed-display">
         <span id="percentage-passed-accurate" style="font-size: 1.2em; font-weight: 650;"></span>
@@ -121,48 +119,38 @@
             var endOfYear = new Date(now.getFullYear() + 1, 0, isLeapYear(now.getFullYear() + 1) ? 1 : 0);
             var remainingTime = endOfYear - now;
 
-            var remainingMonths = Math.floor(remainingTime / (30 * 24 * 60 * 60 * 1000));
-            var remainingDays = Math.floor((remainingTime % (30 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
+            // Calculate days, hours, minutes, and seconds
+            var remainingDays = Math.floor(remainingTime / (24 * 60 * 60 * 1000));
             var remainingHours = Math.floor((remainingTime % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
             var remainingMinutes = Math.floor((remainingTime % (60 * 60 * 1000)) / (60 * 1000));
-            var remainingSeconds = Math.floor((remainingTime % (60 * 1000)) / 1000) + 1
+            var remainingSeconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
 
-            // concatenating 'remaining' units into a single string
+            // Create a formatted countdown string
+            var countdownString =
+                pad(remainingDays) + ':' +
+                pad(remainingHours) + ':' +
+                pad(remainingMinutes) + ':' +
+                pad(remainingSeconds);
 
-	    var remainingUnitsString =
-                remainingMonths + ' Monate ' +
-                remainingDays + ' Tage ' +
-                remainingHours + ' Stunden ' +
-                remainingMinutes + ' Minuten ' +
-                remainingSeconds + ' Sekunden';
+            // Update UI with remaining time
+            document.getElementById('remaining-time').innerHTML = 'Remaining Time: ' + countdownString;
 
-            // updating UI with remaining time
+            // Set the content of the <strong> tag to the formatted date and time
+            document.getElementById('bold-date-time').innerHTML = '<strong>' + now.toLocaleString() + '</strong>';
 
             document.getElementById('year-header').innerHTML = (now.getFullYear() + 1).toString() + ' ist';
 
-            document.getElementById('remaining-units').innerHTML = remainingUnitsString;
-
-            document.getElementById('bold-date-time').innerHTML = '<strong>' + now.toLocaleString() + '</strong>';
-
-            var currentDayInYear = Math.ceil((now - new Date(now.getFullYear(), 0, 1)) / (1000 * 60 * 60 * 24));
-            var isLeap = isLeapYear(now.getFullYear());
-
-            var percentageDays = isLeap ? (currentDayInYear - 1) / (isLeap ? 366 : 365) : (currentDayInYear - 1) / 365;
-            var percentageHours = isLeap ? now.getHours() / 24 / (isLeap ? 366 : 365) : now.getHours() / 24 / 365;
-            var percentageMinutes = isLeap ? now.getMinutes() / 60 / 24 / (isLeap ? 366 : 365) : now.getMinutes() / 60 / 24 / 365;
-            var percentageSeconds = isLeap ? now.getSeconds() / 60 / 60 / 24 / (isLeap ? 366 : 365) : now.getSeconds() / 60 / 60 / 24 / 365;
-
-            var percentageYear = 100 * (percentageDays + percentageHours + percentageMinutes + percentageSeconds);
-
-            var percentageYearRemaining = 100 - percentageYear
-	    
-	    document.getElementById('percentage-passed-accurate').innerHTML = 'Es sind ~' + percentageYear.toFixed(8) + '% des Jahres vergangen';
+            document.getElementById('percentage-passed-accurate').innerHTML = 'Es sind ~' + percentageYear.toFixed(8) + '% des Jahres vergangen';
 
             document.getElementById('percentage-remaining-accurate').innerHTML = 'Es verbleiben ~' + percentageYearRemaining.toFixed(8) + '% des Jahres';
         }
 
-        // update once initially and then every second
+        // Function to pad single-digit numbers with leading zeros
+        function pad(number) {
+            return (number < 10 ? '0' : '') + number;
+        }
 
+        // update once initially and then every second
         updateTimes();
         setInterval(updateTimes, 1000);
 
