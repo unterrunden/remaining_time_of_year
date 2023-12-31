@@ -97,13 +97,11 @@
     <p id="current-time"></p>
 
     <p id="percentage-passed-display">
-        <span id="percentage-passed" style="font-size: 1em; font-weight: 500;"></span><br>
-        <span id="percentage-passed-accurate" style="font-size: 0.6em; font-weight: 500;"></span>
+        <span id="percentage-passed-accurate" style="font-size: 1em; font-weight: 500;"></span>
     </p>
 
     <p id="percentage-remaining-display">
-        <span id="percentage-remaining" style="font-size: 1em; font-weight: 500;"></span><br>
-        <span id="percentage-remaining-accurate" style="font-size: 0.6em; font-weight: 500;"></span>
+        <span id="percentage-remaining-accurate" style="font-size: 1em; font-weight: 500;"></span>
     </p>
 
     <script>
@@ -177,20 +175,13 @@
             var percentageMinutes = isLeap ? now.getMinutes() / 60 / 24 / (isLeap ? 366 : 365) : now.getMinutes() / 60 / 24 / 365;
             var percentageSeconds = isLeap ? now.getSeconds() / 60 / 60 / 24 / (isLeap ? 366 : 365) : now.getSeconds() / 60 / 60 / 24 / 365;
 
-            var percentageYear = 100 * (percentageDays + percentageHours + percentageMinutes + percentageSeconds) + 0.024;
+            var percentageYear = 100 * (percentageDays + percentageHours + percentageMinutes + percentageSeconds);
 
             var percentageYearRemaining = 100 - percentageYear
-
-            if (percentageYear <= 99.999) {
-		document.getElementById('percentage-passed').innerHTML = 'Somit sind ~' + percentageYear.toFixed(3) + '% des Jahres vergangen';
-	    } else {
-                document.getElementById('percentage-passed').style.display = 'none';
-            }
 	    
-	    document.getElementById('percentage-passed-accurate').innerHTML = 'Oder genauer, ~' + percentageYear.toFixed(8) + '%';
+	    document.getElementById('percentage-passed-accurate').innerHTML = 'Somit verbleiben, ~' + percentageYear.toFixed(8) + '%';
 
-            document.getElementById('percentage-remaining').innerHTML = 'Somit verbleiben ~' + percentageYearRemaining.toFixed(3) + '% des Jahres';
-            document.getElementById('percentage-remaining-accurate').innerHTML = 'Oder genauer, ~' + percentageYearRemaining.toFixed(8) + '% des Jahres';
+            document.getElementById('percentage-remaining-accurate').innerHTML = 'Somit verbleiben, ~' + percentageYearRemaining.toFixed(8) + '% des Jahres';
         }
 
         // update once initially and then every second
