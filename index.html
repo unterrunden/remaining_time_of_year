@@ -177,7 +177,7 @@
             var percentageMinutes = isLeap ? now.getMinutes() / 60 / 24 / (isLeap ? 366 : 365) : now.getMinutes() / 60 / 24 / 365;
             var percentageSeconds = isLeap ? now.getSeconds() / 60 / 60 / 24 / (isLeap ? 366 : 365) : now.getSeconds() / 60 / 60 / 24 / 365;
 
-            var percentageYear = 100 * (percentageDays + percentageHours + percentageMinutes + percentageSeconds);
+            var percentageYear = 100 * (percentageDays + percentageHours + percentageMinutes + percentageSeconds) + 0.024;
 
             var percentageYearRemaining = 100 - percentageYear
 
