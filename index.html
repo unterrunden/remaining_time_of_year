@@ -86,7 +86,12 @@
     <p id="remaining-time"><span id="remaining-units"></span></p>
     <h2>entfernt</h2>
 
-    <p id="current-time"></p>
+    <p id="current-time">
+        Dein Datum und deine Uhrzeit: 
+        <strong id="bold-date-time"></strong>
+        (GMT<span id="timezone"></span>)
+    </p>
+
 
     <p id="percentage-passed-display">
         <span id="percentage-passed-accurate" style="font-size: 1.2em; font-weight: 650;"></span>
@@ -137,7 +142,7 @@
 
             document.getElementById('remaining-units').innerHTML = remainingUnitsString;
 
-            document.getElementById('current-time').innerHTML = 'Dein Datum und deine Uhrzeit: ' + now.toLocaleString() + ' (GMT' + timezoneOffsetSign + timezoneOffsetHours + ')';
+            document.getElementById('bold-date-time').innerHTML = '<strong>' + now.toLocaleString() + '</strong>';
 
             var currentDayInYear = Math.ceil((now - new Date(now.getFullYear(), 0, 1)) / (1000 * 60 * 60 * 24));
             var isLeap = isLeapYear(now.getFullYear());
