@@ -130,11 +130,10 @@
             // concatenating 'remaining' units into a single string
 
 	    var remainingUnitsString =
-                remainingMonths + ' Monate ' +
-                remainingDays + ' Tage ' +
-                remainingHours + ' Stunden ' +
+                '000' + 
+                remainingHours + ':' +
                 remainingMinutes + ':' +
-                remainingSeconds + ':';
+                remainingSeconds;
 
             // updating UI with remaining time
 
