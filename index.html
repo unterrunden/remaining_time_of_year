@@ -97,11 +97,11 @@
     <p id="current-time"></p>
 
     <p id="percentage-passed-display">
-        <span id="percentage-passed-accurate" style="font-size: 1em; font-weight: 500;"></span>
+        <span id="percentage-passed-accurate" style="font-size: 0.85em; font-weight: 1000;"></span>
     </p>
 
     <p id="percentage-remaining-display">
-        <span id="percentage-remaining-accurate" style="font-size: 1em; font-weight: 500;"></span>
+        <span id="percentage-remaining-accurate" style="font-size: 0.85em; font-weight: 1000;"></span>
     </p>
 
     <script>
@@ -179,9 +179,9 @@
 
             var percentageYearRemaining = 100 - percentageYear
 	    
-	    document.getElementById('percentage-passed-accurate').innerHTML = 'Somit verbleiben, ~' + percentageYear.toFixed(8) + '%';
+	    document.getElementById('percentage-passed-accurate').innerHTML = 'Es sind, ~' + percentageYear.toFixed(8) + '% des Jahres vergangen';
 
-            document.getElementById('percentage-remaining-accurate').innerHTML = 'Somit verbleiben, ~' + percentageYearRemaining.toFixed(8) + '% des Jahres';
+            document.getElementById('percentage-remaining-accurate').innerHTML = 'Es verbleiben, ~' + percentageYearRemaining.toFixed(8) + '% des Jahres';
         }
 
         // update once initially and then every second
