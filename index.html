@@ -183,7 +183,9 @@
 
             if (percentageYear <= 99.999) {
 		document.getElementById('percentage-passed').innerHTML = 'Somit sind ~' + percentageYear.toFixed(3) + '% des Jahres vergangen';
-	    }
+	    } else {
+                document.getElementById('percentage-passed').style.display = 'none';
+            }
 	    
 	    document.getElementById('percentage-passed-accurate').innerHTML = 'Oder genauer, ~' + percentageYear.toFixed(8) + '%';
 
