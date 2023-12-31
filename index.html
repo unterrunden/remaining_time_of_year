@@ -181,8 +181,11 @@
 
             var percentageYearRemaining = 100 - percentageYear
 
-            document.getElementById('percentage-passed').innerHTML = 'Somit sind ~' + percentageYear.toFixed(3) + '% des Jahres vergangen';
-            document.getElementById('percentage-passed-accurate').innerHTML = 'Oder genauer, ~' + percentageYear.toFixed(8) + '%';
+            if (percentageYear <= 99.999) {
+		document.getElementById('percentage-passed').innerHTML = 'Somit sind ~' + percentageYear.toFixed(3) + '% des Jahres vergangen';
+	    }
+	    
+	    document.getElementById('percentage-passed-accurate').innerHTML = 'Oder genauer, ~' + percentageYear.toFixed(8) + '%';
 
             document.getElementById('percentage-remaining').innerHTML = 'Somit verbleiben ~' + percentageYearRemaining.toFixed(3) + '% des Jahres';
             document.getElementById('percentage-remaining-accurate').innerHTML = 'Oder genauer, ~' + percentageYearRemaining.toFixed(8) + '% des Jahres';
