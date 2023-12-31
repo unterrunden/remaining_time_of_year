@@ -27,6 +27,7 @@
 
         h2 {
             font-size: 60px;
+	    font-weight: 600;
             text-align: center;
 	    color: #ffffff;
         }
@@ -56,7 +57,7 @@
         }
 
         #current-time {
-            font-size: 30px;
+            font-size: 45px;
             font-weight: bold;
             bottom: 20px;
             padding-bottom: 30px;
@@ -67,27 +68,17 @@
         #timezone {
             display: inline-block;
             margin-left: 5px;
-            font-size: 30px;
+            font-size: 45px;
             position: absolute;
             bottom: 10px;
             text-align: center;
             width: 98%;
             color: #ffffff;
         }
-
-        button {
-            font-size: 16px;
-            padding: 10px 20px;
-            cursor: pointer;
-            transition: color 0.3s ease;
-	    color: #808080;
-        }
         
     </style>
 </head>
 <body>
-    <button id="colorToggleButton">Toggle Color</button>
-	
     <h1 id="year-header"></h1>
 
     <p id="timezone"></p>
@@ -106,26 +97,6 @@
 
     <script>
 
-        const button = document.getElementById('colorToggleButton');
-        const body = document.body;
-        const elementsToToggle = document.querySelectorAll('#year-header, #remaining-time, #percentage-passed, #percentage-passed-accurate, #percentage-remaining, #percentage-remaining-accurate, #current-time, #timezone');
-
-        button.addEventListener('click', toggleColor);
-
-        function toggleColor() {
-            const currentColor = getComputedStyle(body).color;
-            const isWhite = currentColor === 'rgb(255, 255, 255)' || currentColor === '#ffffff';
-	    const isBlack = currentColor === 'rgb(0, 0, 0)' || currentColor === '#000000'
-
-            // toggle between white and black for each element
-    
-	    elementsToToggle.forEach(element => {
-                element.style.color = isWhite ? 'black' : 'white';
-		element.style.color = isBlack ? 'white' : 'black';
-            });
-        }
-
-		
         function isLeapYear(year) {
             return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
         }
