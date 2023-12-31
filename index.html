@@ -23,28 +23,28 @@
             text-align: center;
             margin: 0;
             font-size: 50px;
-	    font-weight: 1000;
+            font-weight: 1000;
         }
 
         h2 {
             font-size: 60px;
-	    font-weight: 500;
+            font-weight: 500;
             text-align: center;
-	    color: #ffffff;
+            color: #ffffff;
         }
 
         #year-header {
             font-size: 80px;
             font-weight: 800;
             padding-top: 20px;
-	    color: #ffffff;
+            color: #ffffff;
         }
 
         #remaining-time {
             font-size: 120px;
             padding-top: 35px;
             font-weight: 900;
-	    color: #ffffff;
+            color: #ffffff;
         }
 
         #percentage-passed-display {
@@ -76,7 +76,6 @@
             width: 98%;
             color: #ffffff;
         }
-        
     </style>
 </head>
 <body>
@@ -107,6 +106,10 @@
             return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
         }
 
+        function padZero(number) {
+            return (number < 10 ? '0' : '') + number;
+        }
+
         function updateTimes() {
             var now = new Date();
 
@@ -125,14 +128,14 @@
             var remainingDays = Math.floor((remainingTime % (30 * 24 * 60 * 60 * 1000)) / (24 * 60 * 60 * 1000));
             var remainingHours = Math.floor((remainingTime % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
             var remainingMinutes = Math.floor((remainingTime % (60 * 60 * 1000)) / (60 * 1000));
-            var remainingSeconds = Math.floor((remainingTime % (60 * 1000)) / 1000) + 1
+            var remainingSeconds = Math.floor((remainingTime % (60 * 1000)) / 1000) + 1;
 
             // concatenating 'remaining' units into a single string
 
-	    var remainingUnitsString =
-                remainingHours + ':' +
-                remainingMinutes + ':' +
-                remainingSeconds;
+            var remainingUnitsString =
+                padZero(remainingHours) + ':' +
+                padZero(remainingMinutes) + ':' +
+                padZero(remainingSeconds);
 
             // updating UI with remaining time
 
@@ -152,7 +155,7 @@
 
             var percentageYear = 100 * (percentageDays + percentageHours + percentageMinutes + percentageSeconds);
 
-            var percentageYearRemaining = 100 - percentageYear
+            var percentageYearRemaining = 100 - percentageYear;
 	    
 	    document.getElementById('percentage-passed-accurate').innerHTML = 'Es sind ~' + percentageYear.toFixed(8) + '% des Jahres vergangen';
 
