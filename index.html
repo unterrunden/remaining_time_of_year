@@ -42,7 +42,6 @@
     <p id="remaining-time"></p>
     <p id="percentage-passed-display"></p>
     <p id="percentage-remaining-display"></p>
-    <button onclick="toggleMode()">Umschalten: Modus wechseln</button>
     <script>
         let detailedMode = true; // Toggle state
 
@@ -52,11 +51,6 @@
 
         function padZero(number) {
             return (number < 10 ? '0' : '') + number;
-        }
-
-        function toggleMode() {
-            detailedMode = !detailedMode;
-            updateTimes();
         }
 
         function updateTimes() {
@@ -74,16 +68,12 @@
             const percentagePassed = (elapsedSeconds / totalSecondsInYear) * 100;
             const percentageRemaining = 100 - percentagePassed;
 
-            document.getElementById('year-header').textContent = `${now.getFullYear()} verbleibend:`;
+            document.getElementById('year-header').textContent = `${now.getFullYear() + 1}`;
             
-            if (detailedMode) {
-                document.getElementById('remaining-time').textContent = `${days} Tage, ${hours} Stunden, ${minutes} Minuten, ${seconds} Sekunden`;
-            } else {
-                document.getElementById('remaining-time').textContent = `${padZero(days)}:${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
-            }
+            document.getElementById('remaining-time').textContent = `${padZero(days)}:${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
 
-            document.getElementById('percentage-passed-display').textContent = `~${percentagePassed.toFixed(6)}% des Jahres sind vergangen.`;
-            document.getElementById('percentage-remaining-display').textContent = `~${percentageRemaining.toFixed(6)}% des Jahres verbleiben.`;
+            document.getElementById('percentage-passed-display').textContent = `${percentagePassed.toFixed(7)}%`;
+            document.getElementById('percentage-remaining-display').textContent = `${percentageRemaining.toFixed(7)}%`;
         }
 
         updateTimes();
