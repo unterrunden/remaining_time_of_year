@@ -15,27 +15,50 @@
             color: #ffffff;
             margin: 0;
         }
-        h1, p, #remaining-time, #current-time, #percentage-passed-display, #percentage-remaining-display {
+        h1, #remaining-time, #percentage-passed-display, #percentage-remaining-display, button {
             text-align: center;
             color: #ffffff;
+            margin-top: 20px;
         }
-        h1 { font-size: 80px; font-weight: 800; margin-top: 20px; }
-        #remaining-time { font-size: 120px; font-weight: 900; margin-top: 35px; }
-        #current-time, #percentage-passed-display, #percentage-remaining-display {
-            font-size: 60px; margin: 15px 0;
+        h1 { font-size: 80px; font-weight: 800; }
+        #remaining-time { font-size: 100px; font-weight: 900; }
+        #percentage-passed-display, #percentage-remaining-display {
+            font-size: 50px; }
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #444;
+            color: #fff;
         }
     </style>
 </head>
 <body>
     <h1 id="year-header"></h1>
     <p id="remaining-time"></p>
-    <p id="current-time"></p>
     <p id="percentage-passed-display"></p>
     <p id="percentage-remaining-display"></p>
+    <button onclick="toggleMode()">Umschalten: Modus wechseln</button>
     <script>
+        let detailedMode = true; // Toggle state
+
         function isLeapYear(year) {
             return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
         }
+
+        function padZero(number) {
+            return (number < 10 ? '0' : '') + number;
+        }
+
+        function toggleMode() {
+            detailedMode = !detailedMode;
+            updateTimes();
+        }
+
         function updateTimes() {
             const now = new Date();
             const endOfYear = new Date(now.getFullYear(), 11, 31, 23, 59, 59, 999);
@@ -46,18 +69,23 @@
             const minutes = Math.floor((remainingTime % (60 * 60 * 1000)) / (60 * 1000));
             const seconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
 
-            document.getElementById('year-header').textContent = `Das Jahr ${now.getFullYear()} neigt sich dem Ende zu`;
-            document.getElementById('remaining-time').textContent = `${days} Tage, ${hours} Stunden, ${minutes} Minuten, ${seconds} Sekunden verbleiben`;
-
             const totalSecondsInYear = (isLeapYear(now.getFullYear()) ? 366 : 365) * 24 * 60 * 60;
             const elapsedSeconds = (now - new Date(now.getFullYear(), 0, 1)) / 1000;
             const percentagePassed = (elapsedSeconds / totalSecondsInYear) * 100;
             const percentageRemaining = 100 - percentagePassed;
 
-            document.getElementById('percentage-passed-display').textContent = `~${percentagePassed.toFixed(2)}% des Jahres sind vergangen.`;
-            document.getElementById('percentage-remaining-display').textContent = `~${percentageRemaining.toFixed(2)}% des Jahres verbleiben.`;
-            document.getElementById('current-time').textContent = `Aktuelle Zeit: ${now.toLocaleString()}`;
+            document.getElementById('year-header').textContent = `${now.getFullYear()} verbleibend:`;
+            
+            if (detailedMode) {
+                document.getElementById('remaining-time').textContent = `${days} Tage, ${hours} Stunden, ${minutes} Minuten, ${seconds} Sekunden`;
+            } else {
+                document.getElementById('remaining-time').textContent = `${padZero(days)}:${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+            }
+
+            document.getElementById('percentage-passed-display').textContent = `~${percentagePassed.toFixed(6)}% des Jahres sind vergangen.`;
+            document.getElementById('percentage-remaining-display').textContent = `~${percentageRemaining.toFixed(6)}% des Jahres verbleiben.`;
         }
+
         updateTimes();
         setInterval(updateTimes, 1000);
     </script>
