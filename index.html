@@ -68,7 +68,7 @@
             const newYearImage = 'https://imgur.com/SRzZKwq.jpg';
             const defaultImage = 'https://www.hdwallpapers.in/download/landscape_and_trees_covered_with_snow_during_winter_sunset_hd_nature-HD.jpg';
             const isNewYear = now.getMonth() === 0 && now.getDate() === 1;
-            document.body.style.backgroundImage = url('${isNewYear ? newYearImage : defaultImage}');
+            document.body.style.backgroundImage = `url('${isNewYear ? newYearImage : defaultImage}')`;
         }
 
         function updateTimes() {
@@ -86,25 +86,25 @@
             const percentagePassed = (elapsedSeconds / totalSecondsInYear) * 100;
             const percentageRemaining = 100 - percentagePassed;
 
-            document.getElementById('year-header').textContent = ${now.getFullYear() + 1};
+            document.getElementById('year-header').textContent = now.getFullYear() + 1;
 
             if (detailedMode) {
-                document.getElementById('remaining-time').textContent = 
-                    ${padZero(days, 3)}:${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)};
+                document.getElementById('remaining-time').textContent = `${padZero(days, 3)}:${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
             } else {
                 const parts = [];
-                if (days > 0) parts.push(padZero(days, 3));
-                if (hours > 0) parts.push(padZero(hours));
-                if (minutes > 0) parts.push(padZero(minutes));
-                if (seconds > 0) parts.push(padZero(seconds));
+                if (days > 0 || hours > 0 || minutes > 0 || seconds > 0) parts.push(padZero(days, 3));
+                if (hours > 0 || minutes > 0 || seconds > 0) parts.push(padZero(hours));
+                if (minutes > 0 || seconds > 0) parts.push(padZero(minutes));
+                parts.push(padZero(seconds));
                 document.getElementById('remaining-time').textContent = parts.join(':');
             }
 
-            document.getElementById('percentage-passed-display').textContent = ${percentagePassed.toFixed(6)}%;
-            document.getElementById('percentage-remaining-display').textContent = ${percentageRemaining.toFixed(6)}%;
+            document.getElementById('percentage-passed-display').textContent = `${percentagePassed.toFixed(6)}%`;
+            document.getElementById('percentage-remaining-display').textContent = `${percentageRemaining.toFixed(6)}%`;
 
             updateBackground();
         }
+
 
         function toggleMode() {
             detailedMode = !detailedMode;
