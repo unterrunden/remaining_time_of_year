@@ -31,6 +31,7 @@
             display: inline-block;
             margin-left: 30px;
             margin-right: 30px;
+            margin-bottom: -40px;
         }
         button {
             position: fixed;
@@ -44,6 +45,9 @@
     </style>
 </head>
 <body>
+
+    <h6>62</h6>
+    
     <h1 id="year-header"></h1>
     <p id="remaining-time"></p>
     <div id="percentage-container">
@@ -88,6 +92,17 @@
 
             document.getElementById('year-header').textContent = now.getFullYear() + 1;
 
+            let remainingSeconds = remainingTime / 1000;
+            const fontSizeBase = 80;
+
+            if (remainingSeconds <= 30) {
+                const additionalSize = Math.floor(30 - remainingSeconds);
+                const newFontSize = fontSizeBase + additionalSize;
+                document.getElementById('remaining-time').style.fontSize = `${newFontSize}px`;
+            } else {
+                document.getElementById('remaining-time').style.fontSize = `${fontSizeBase}px`;
+            }
+            
             if (detailedMode) {
                 document.getElementById('remaining-time').textContent = `${padZero(days, 3)}:${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
             } else {
