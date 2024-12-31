@@ -85,16 +85,17 @@
             const elapsedSeconds = (now - new Date(now.getFullYear(), 0, 1)) / 1000;
             const percentagePassed = (elapsedSeconds / totalSecondsInYear) * 100;
             const percentageRemaining = 100 - percentagePassed;
-
+            
             document.getElementById('year-header').textContent = now.getFullYear() + 1;
 
             if (detailedMode) {
-                document.getElementById('remaining-time').textContent = `${padZero(days, 3)}:${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+                document.getElementById('remaining-time').textContent = 
+                    `${padZero(days, 3)}:${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
             } else {
                 const parts = [];
-                if (days > 0 || hours > 0 || minutes > 0 || seconds > 0) parts.push(padZero(days, 3));
-                if (hours > 0 || minutes > 0 || seconds > 0) parts.push(padZero(hours));
-                if (minutes > 0 || seconds > 0) parts.push(padZero(minutes));
+                if (days > 0 || hours > 0 || minutes > 0 || seconds > 59) parts.push(padZero(days, 3));
+                if (hours > 0 || minutes > 59 || seconds > 59) parts.push(padZero(hours));
+                if (minutes > 0 || seconds > 59) parts.push(padZero(minutes));
                 parts.push(padZero(seconds));
                 document.getElementById('remaining-time').textContent = parts.join(':');
             }
@@ -104,8 +105,7 @@
 
             updateBackground();
         }
-
-
+        
         function toggleMode() {
             detailedMode = !detailedMode;
             updateTimes();
