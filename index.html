@@ -17,15 +17,21 @@
             color: #ffffff;
             margin: 0;
         }
-        h1, #remaining-time, #percentage-passed-display, #percentage-remaining-display {
+        h1, #remaining-time {
             text-align: center;
             color: #ffffff;
             margin-top: 20px;
         }
         h1 { font-size: 80px; font-weight: 800; }
         #remaining-time { font-size: 100px; font-weight: 900; }
-        #percentage-passed-display, #percentage-remaining-display {
+        #percentage-container {
+            text-align: center;
             font-size: 50px;
+            margin-top: 20px;
+        }
+        .percentage-item {
+            display: inline-block;
+            margin: 0 20px;
         }
         button {
             position: fixed;
@@ -41,8 +47,10 @@
 <body>
     <h1 id="year-header"></h1>
     <p id="remaining-time"></p>
-    <p id="percentage-passed-display"></p>
-    <p id="percentage-remaining-display"></p>
+    <div id="percentage-container">
+        <span id="percentage-passed-display" class="percentage-item"></span>
+        <span id="percentage-remaining-display" class="percentage-item"></span>
+    </div>
     <button id="toggle-button" onclick="toggleMode()"></button>
 
     <script>
