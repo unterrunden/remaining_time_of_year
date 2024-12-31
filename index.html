@@ -34,7 +34,7 @@
             display: inline-block;
             margin-left: 30px;
             margin-right: 30px;
-            margin-bottom: 90px;
+            margin-bottom: 200px;
         }
         
         button {
@@ -97,7 +97,7 @@
             const fontSizeBase = 80;
 
             if (remainingSeconds <= 30) {
-                const additionalSize = Math.floor(60 - remainingSeconds * 2);
+                const additionalSize = Math.floor(90 - remainingSeconds * 3);
                 const newFontSize = fontSizeBase + additionalSize;
                 document.getElementById('remaining-time').style.fontSize = `${newFontSize}px`;
             } else {
