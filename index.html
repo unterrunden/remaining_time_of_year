@@ -33,7 +33,7 @@
             display: inline-block;
             margin-left: 20px;
             margin-right: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 60px;
         }
         button {
             position: fixed;
@@ -43,6 +43,9 @@
             height: 50px;
             opacity: 0;
             cursor: pointer;
+        }
+        .darkened {
+            filter: brightness(50%);
         }
     </style>
 </head>
@@ -55,6 +58,8 @@
     </div>
     <button id="toggle-button" onclick="toggleMode()"></button>
 
+    <img id="tempImage">
+    
     <script>
         let detailedMode = true;
 
@@ -69,9 +74,11 @@
         function updateBackground() {
             const now = new Date();
             const newYearImage = 'https://imgur.com/SsJUgit.jpg';
+            const tempImageElement = document.getElementById('tempImage');
+            tempImageElement.src = tempImage;
+            tempImageElement.classList.add('darkened');
             const defaultImage = 'https://www.hdwallpapers.in/download/landscape_and_trees_covered_with_snow_during_winter_sunset_hd_nature-HD.jpg';
             const isNewYear = now.getMonth() === 0 && now.getDate() === 1;
-
             document.body.style.backgroundImage = `url('${isNewYear ? newYearImage : defaultImage}')`;
         }
 
