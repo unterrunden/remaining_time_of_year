@@ -2,54 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Remaining Time of the Year</title>
+
+    <title>Remaining time of the year</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400&display=swap" rel="stylesheet">
-
+    
     <style>
         body {
             font-family: 'Noto Sans', sans-serif;
-            margin: 0;
-            background: url('https://www.hdwallpapers.in/download/landscape_and_trees_covered_with_snow_during_winter_sunset_hd_nature-HD.jpg') no-repeat center center fixed;
             background-size: cover;
-            color: white;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #ffffff;
+            margin: 0;
+        }
+        h1, #remaining-time, #percentage-passed-display, #percentage-remaining-display {
             text-align: center;
-        }
-        h1 {
-            font-size: 80px;
-            font-weight: bold;
-            margin-top: 50px;
-        }
-        #remaining-time {
-            font-size: 100px;
-            font-weight: bold;
-        }
-        #percentage-display {
-            font-size: 40px;
+            color: #ffffff;
             margin-top: 20px;
         }
+        h1 { font-size: 80px; font-weight: 800; }
+        #remaining-time { font-size: 100px; font-weight: 900; }
+        #percentage-passed-display, #percentage-remaining-display {
+            font-size: 50px;
+        }
         button {
-            display: block;
             position: fixed;
-            bottom: 20px;
-            right: 20px;
+            bottom: 10px;
+            right: 10px;
             width: 50px;
             height: 50px;
-            background-color: rgba(0, 0, 0, 0.5);
-            border: none;
-            border-radius: 50%;
+            opacity: 0;
             cursor: pointer;
-            color: white;
-            text-align: center;
-            line-height: 50px;
         }
     </style>
 </head>
 <body>
     <h1 id="year-header"></h1>
     <p id="remaining-time"></p>
-    <p id="percentage-display"></p>
-    <button id="toggle-mode">T</button>
+    <p id="percentage-passed-display"></p>
+    <p id="percentage-remaining-display"></p>
+    <button id="toggle-button" onclick="toggleMode()"></button>
 
     <script>
         let detailedMode = true;
@@ -58,8 +52,17 @@
             return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
         }
 
-        function padZero(number) {
-            return number < 10 ? '0' + number : number.toString();
+        function padZero(number, length = 2) {
+            return String(number).padStart(length, '0');
+        }
+
+        function updateBackground() {
+            const now = new Date();
+            const newYearImage = 'https://imgur.com/SsJUgit.jpg';
+            const defaultImage = 'https://www.hdwallpapers.in/download/landscape_and_trees_covered_with_snow_during_winter_sunset_hd_nature-HD.jpg';
+            const isNewYear = now.getMonth() === 0 && now.getDate() === 1;
+
+            document.body.style.backgroundImage = `url('${isNewYear ? newYearImage : defaultImage}')`;
         }
 
         function updateTimes() {
@@ -72,44 +75,39 @@
             const minutes = Math.floor((remainingTime % (60 * 60 * 1000)) / (60 * 1000));
             const seconds = Math.floor((remainingTime % (60 * 1000)) / 1000);
 
-            const units = [days, hours, minutes, seconds].map(padZero);
-            const displayString = detailedMode
-                ? `${units[0]}:${units[1]}:${units[2]}:${units[3]}`
-                : units.filter(unit => unit !== '00').join(':');
-
-            document.getElementById('remaining-time').textContent = displayString;
-            document.getElementById('year-header').textContent = now.getFullYear() + 1;
-
             const totalSecondsInYear = (isLeapYear(now.getFullYear()) ? 366 : 365) * 24 * 60 * 60;
             const elapsedSeconds = (now - new Date(now.getFullYear(), 0, 1)) / 1000;
             const percentagePassed = (elapsedSeconds / totalSecondsInYear) * 100;
             const percentageRemaining = 100 - percentagePassed;
 
-            document.getElementById('percentage-display').textContent = 
-                `${percentagePassed.toFixed(6)}% | ${percentageRemaining.toFixed(6)}%`;
+            document.getElementById('year-header').textContent = `${now.getFullYear() + 1}`;
 
-            checkNewYearBackground();
+            if (detailedMode) {
+                document.getElementById('remaining-time').textContent = 
+                    `${padZero(days, 3)}:${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+            } else {
+                const parts = [];
+                if (days > 0) parts.push(padZero(days, 3));
+                if (hours > 0) parts.push(padZero(hours));
+                if (minutes > 0) parts.push(padZero(minutes));
+                if (seconds > 0) parts.push(padZero(seconds));
+                document.getElementById('remaining-time').textContent = parts.join(':');
+            }
+
+            document.getElementById('percentage-passed-display').textContent = `${percentagePassed.toFixed(6)}%`;
+            document.getElementById('percentage-remaining-display').textContent = `${percentageRemaining.toFixed(6)}%`;
+
+            updateBackground();
         }
 
-        function checkNewYearBackground() {
-            const newYearImage = 'https://imgur.com/SsJUgit.jpg';
-            const defaultImage = 'https://www.hdwallpapers.in/download/landscape_and_trees_covered_with_snow_during_winter_sunset_hd_nature-HD.jpg';
-            const now = new Date();
-
-            const isNewYear = now.getMonth() === 0 && now.getDate() === 1;
-            document.body.style.backgroundImage = `url('${isNewYear ? newYearImage : defaultImage}')`;
-        }
-
-        document.getElementById('toggle-mode').addEventListener('click', () => {
+        function toggleMode() {
             detailedMode = !detailedMode;
-        });
-
-        function init() {
             updateTimes();
-            setInterval(updateTimes, 50);
         }
-
-        init();
+        
+        updateTimes();
+        setInterval(updateTimes, 50);
+        
     </script>
 </body>
 </html>
