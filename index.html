@@ -29,7 +29,7 @@
             margin-top: 20px;
         }
         button {
-            display: none;
+            display: block;
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -39,15 +39,17 @@
             border: none;
             border-radius: 50%;
             cursor: pointer;
+            color: white;
+            text-align: center;
+            line-height: 50px;
         }
     </style>
 </head>
 <body>
     <h1 id="year-header"></h1>
     <p id="remaining-time"></p>
-    <p id="percentage-passed"></p>
-    <p id="percentage-remaining"></p>
-    <button id="toggle-mode"></button>
+    <p id="percentage-display"></p>
+    <button id="toggle-mode">T</button>
 
     <script>
         let detailedMode = true;
@@ -83,8 +85,11 @@
             const percentagePassed = (elapsedSeconds / totalSecondsInYear) * 100;
             const percentageRemaining = 100 - percentagePassed;
 
-            document.getElementById('percentage-passed').textContent = `${percentagePassed.toFixed(6)}%`;
-            document.getElementById('percentage-remaining').textContent = `${percentageRemaining.toFixed(6)}%`;
+            document.getElementById('percentage-display').textContent = 
+                `${percentagePassed.toFixed(6)}% | ${percentageRemaining.toFixed(6)}%`;
+
+            checkNewYearBackground();
+        }
 
         function checkNewYearBackground() {
             const newYearImage = 'https://imgur.com/SsJUgit.jpg';
@@ -100,9 +105,8 @@
         });
 
         function init() {
-            checkNewYearBackground();
             updateTimes();
-            setInterval(updateTimes, 1000);
+            setInterval(updateTimes, 50);
         }
 
         init();
