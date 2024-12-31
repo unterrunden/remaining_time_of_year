@@ -18,7 +18,7 @@
             color: #ffffff;
             margin: 0;
         }
-        h1, #remaining-time, #percentage-passed-display, #percentage-remaining-display, button {
+        h1, #remaining-time, #percentage-passed-display, #percentage-remaining-display {
             text-align: center;
             color: #ffffff;
             margin-top: 20px;
@@ -26,17 +26,16 @@
         h1 { font-size: 80px; font-weight: 800; }
         #remaining-time { font-size: 100px; font-weight: 900; }
         #percentage-passed-display, #percentage-remaining-display {
-            font-size: 50px; }
+            font-size: 50px;
+        }
         button {
-            display: block;
-            margin: 20px auto;
-            padding: 10px 20px;
-            font-size: 20px;
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            width: 50px;
+            height: 50px;
+            opacity: 0;
             cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #444;
-            color: #fff;
         }
     </style>
 </head>
@@ -45,15 +44,17 @@
     <p id="remaining-time"></p>
     <p id="percentage-passed-display"></p>
     <p id="percentage-remaining-display"></p>
+    <button id="toggle-button" onclick="toggleMode()"></button>
+
     <script>
-        let detailedMode = true; // Toggle state
+        let detailedMode = true; // Default mode: detailed
 
         function isLeapYear(year) {
             return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
         }
 
-        function padZero(number) {
-            return (number < 10 ? '0' : '') + number;
+        function padZero(number, length = 2) {
+            return String(number).padStart(length, '0');
         }
 
         function updateTimes() {
@@ -72,11 +73,26 @@
             const percentageRemaining = 100 - percentagePassed;
 
             document.getElementById('year-header').textContent = `${now.getFullYear() + 1}`;
-            
-            document.getElementById('remaining-time').textContent = `${padZero(days)}:${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
 
-            document.getElementById('percentage-passed-display').textContent = `${percentagePassed.toFixed(7)}%`;
-            document.getElementById('percentage-remaining-display').textContent = `${percentageRemaining.toFixed(7)}%`;
+            if (detailedMode) {
+                document.getElementById('remaining-time').textContent = 
+                    `${padZero(days, 3)}:${padZero(hours)}:${padZero(minutes)}:${padZero(seconds)}`;
+            } else {
+                const parts = [];
+                if (days > 0) parts.push(padZero(days, 3));
+                if (hours > 0) parts.push(padZero(hours));
+                if (minutes > 0) parts.push(padZero(minutes));
+                if (seconds > 0) parts.push(padZero(seconds));
+                document.getElementById('remaining-time').textContent = parts.join(':');
+            }
+
+            document.getElementById('percentage-passed-display').textContent = `${percentagePassed.toFixed(6)}%`;
+            document.getElementById('percentage-remaining-display').textContent = `${percentageRemaining.toFixed(6)}%`;
+        }
+
+        function toggleMode() {
+            detailedMode = !detailedMode;
+            updateTimes();
         }
 
         updateTimes();
