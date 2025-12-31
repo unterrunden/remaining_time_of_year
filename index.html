@@ -49,7 +49,7 @@
     </style>
 </head>
 <body>
-    <h1 id="year-header"> in</h1>
+    <h1 id="year-header"></h1>
     <p id="remaining-time"></p>
     <div id="percentage-container">
         <span id="percentage-passed-display" class="percentage-item"></span>
@@ -91,7 +91,7 @@
             const percentagePassed = (elapsedSeconds / totalSecondsInYear) * 100;
             const percentageRemaining = 100 - percentagePassed;
 
-            document.getElementById('year-header').textContent = now.getFullYear() + 1;
+            document.getElementById('year-header').textContent = now.getFullYear() + 1 + " in";
 
             let remainingSeconds = remainingTime / 1000;
             const fontSizeBase = 80;
